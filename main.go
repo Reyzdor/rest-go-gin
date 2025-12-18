@@ -21,7 +21,12 @@ func main() {
 		c.HTML(200, "register.html", nil)
 	})
 
+	r.GET("/login", func(c *gin.Context) {
+		c.HTML(200, "login.html", nil)
+	})
+
 	r.POST("/register", handlers.Register)
+	r.POST("/login", handlers.Login)
 
 	r.Run()
 
