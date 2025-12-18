@@ -17,12 +17,17 @@ func main() {
 	r := gin.Default()
 
 	r.LoadHTMLGlob("templates/*")
+
 	r.GET("/register", func(c *gin.Context) {
 		c.HTML(200, "register.html", nil)
 	})
 
 	r.GET("/login", func(c *gin.Context) {
 		c.HTML(200, "login.html", nil)
+	})
+
+	r.GET("/main", func(c *gin.Context) {
+		c.HTML(200, "main.html", nil)
 	})
 
 	r.POST("/register", handlers.Register)

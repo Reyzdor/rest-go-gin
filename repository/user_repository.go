@@ -23,7 +23,7 @@ func CreateUser(user *models.User) error {
 
 func GetUserByUsername(username string) (*models.User, error) {
 	query := `
-		SELECT id, username, password, email
+		SELECT id, username, email, password
 		FROM users
 		WHERE username = ?
 	`
@@ -40,4 +40,25 @@ func GetUserByUsername(username string) (*models.User, error) {
 	}
 
 	return &user, nil
+}
+
+func GetUserByEmail(email string) (*models.User, error) {
+	query := `
+		SELECT id, username, email, password
+		FROM users
+		WHERE email = ?
+	`
+
+	row := database.DB.QueryRow(query, email)
+	var user models.User
+	err := row.Scan(&user.ID, &user.Username, &user.Email, &user.Password)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, errors.New("User not found")
+		}
+		return nil, err
+	}
+
+	return &user, nil
+
 }

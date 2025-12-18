@@ -1,16 +1,17 @@
 package handlers
 
 import (
+	"Application/models"
 	"Application/repository"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type LoginInput struct {
-	Username string `form:"username_login"`
-	Email    string `form:"email_login"`
+	Login    string `form:"login"`
 	Password string `form:"password_login"`
 }
 
@@ -23,7 +24,15 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	user, err := repository.GetUserByUsername(input.Username)
+	var user *models.User
+	var err error
+
+	if strings.Contains(input.Login, "@") {
+		user, err = repository.GetUserByEmail(input.Login)
+	} else {
+		user, err = repository.GetUserByUsername(input.Login)
+	}
+
 	if err != nil {
 		c.HTML(http.StatusOK, "login.html", gin.H{"error": "User not found"})
 		return
@@ -34,6 +43,6 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "/", gin.H{"username": user.Username})
+	c.Redirect(http.StatusFound, "/main")
 
 }
