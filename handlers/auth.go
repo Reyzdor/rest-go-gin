@@ -4,6 +4,7 @@ import (
 	"Application/models"
 	"Application/repository"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
@@ -11,6 +12,7 @@ import (
 
 type RegisterInput struct {
 	Username        string `form:"username" json:"username"`
+	Email           string `form:"email" json:"email"`
 	Password        string `form:"password" json:"password"`
 	ConfirmPassword string `form:"confirm_password" json:"confirm_password"`
 }
@@ -19,6 +21,11 @@ func Register(c *gin.Context) {
 	var input RegisterInput
 	if err := c.ShouldBind(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		return
+	}
+
+	if !isValidEmail(input.Email) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid email"})
 		return
 	}
 
@@ -38,6 +45,7 @@ func Register(c *gin.Context) {
 
 	user := &models.User{
 		Username: input.Username,
+		Email:    input.Email,
 		Password: string(hash),
 	}
 
@@ -47,4 +55,18 @@ func Register(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, gin.H{"message": "Registered"})
+}
+
+func isValidEmail(email string) bool {
+	at := strings.Index(email, "@")
+	if at < 1 || at == len(email)-1 {
+		return false
+	}
+
+	dot := strings.LastIndex(email, ".")
+	if dot < at+2 || dot == len(email)-1 {
+		return false
+	}
+
+	return true
 }
