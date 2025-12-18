@@ -16,17 +16,11 @@ func InitSQLite() error {
 
 	db.SetMaxOpenConns(1)
 
-	sc := `
-		CREATE TABLE IF NOT EXISTS users (
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		username TEXT NOT NULL,
-		password TEXT NOT NULL,
-		email TEXT NOT NULL,
-		created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-	);`
+	if err := createUsersTable(db); err != nil {
+		return err
+	}
 
-	_, err = db.Exec(sc)
-	if err != nil {
+	if err := createSessionsTable(db); err != nil {
 		return err
 	}
 
