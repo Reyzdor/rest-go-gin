@@ -16,6 +16,8 @@ func main() {
 
 	r := gin.Default()
 
+	r.Static("/static", "./static")
+
 	r.LoadHTMLGlob("templates/*")
 
 	r.GET("/register", func(c *gin.Context) {
@@ -27,7 +29,7 @@ func main() {
 	})
 
 	r.GET("/main", func(c *gin.Context) {
-		c.HTML(200, "main.html", nil)
+		c.HTML(200, "index.html", nil)
 	})
 
 	r.POST("/register", handlers.Register)
