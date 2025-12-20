@@ -4,6 +4,7 @@ import (
 	"Application/database"
 	"Application/handlers"
 	"log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,6 +16,10 @@ func main() {
 	defer database.DB.Close()
 
 	r := gin.Default()
+
+	r.GET("/favicon.ico", func(c *gin.Context) {
+		c.Data(http.StatusOK, "image/x-icon", []byte{})
+	})
 
 	r.Static("/static", "./static")
 

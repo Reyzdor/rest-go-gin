@@ -20,17 +20,49 @@ type RegisterInput struct {
 func Register(c *gin.Context) {
 	var input RegisterInput
 	if err := c.ShouldBind(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		c.HTML(http.StatusBadRequest, "register.html", gin.H{"error": "Invalid input"})
 		return
 	}
 
 	if !isValidEmail(input.Email) {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid email"})
+		c.HTML(http.StatusBadRequest, "register.html", gin.H{"error": "Invalid email"})
+		return
+	}
+
+	if !isValidPassword(input.Password) {
+		c.HTML(http.StatusBadRequest, "register.html", gin.H{"error": "Password must be at least 8 characters long"})
+		return
+	}
+
+	if !isValidUsername(input.Username) {
+		c.HTML(http.StatusBadRequest, "register.html", gin.H{"error": "Incorrect username"})
 		return
 	}
 
 	if input.Password != input.ConfirmPassword {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Password do not match"})
+		c.HTML(http.StatusBadRequest, "register.html", gin.H{"error": "Password do not match"})
+		return
+	}
+
+	emailExists, err := repository.CheckEmailExists(input.Email)
+	if err != nil {
+		c.HTML(http.StatusInternalServerError, "register.html", gin.H{"error": "Internal serval error email"})
+		return
+	}
+
+	if emailExists {
+		c.HTML(http.StatusConflict, "register.html", gin.H{"error": "Email already registered"})
+		return
+	}
+
+	usernameExists, err := repository.CheckUsernameExists(input.Username)
+	if err != nil {
+		c.HTML(http.StatusInternalServerError, "register.html", gin.H{"error": "Internal server error username"})
+		return
+	}
+
+	if usernameExists {
+		c.HTML(http.StatusConflict, "register.html", gin.H{"error": "Username already registered"})
 		return
 	}
 
@@ -39,7 +71,7 @@ func Register(c *gin.Context) {
 		bcrypt.DefaultCost,
 	)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Hash error"})
+		c.HTML(http.StatusInternalServerError, "register.html", gin.H{"error": "Hash error"})
 		return
 	}
 
@@ -50,7 +82,7 @@ func Register(c *gin.Context) {
 	}
 
 	if err := repository.CreateUser(user); err != nil {
-		c.JSON(http.StatusConflict, gin.H{"error": "User already exists"})
+		c.HTML(http.StatusConflict, "register.html", gin.H{"error": "User already exists"})
 		return
 	}
 
@@ -69,4 +101,27 @@ func isValidEmail(email string) bool {
 	}
 
 	return true
+}
+
+func isValidPassword(password string) bool {
+	if len(password) < 8 {
+		return false
+	}
+
+	return true
+
+}
+
+func isValidUsername(username string) bool {
+	if len(username) < 4 {
+		return false
+	}
+
+	for _, char := range username {
+		if char < '0' || char > '9' {
+			return true
+		}
+	}
+
+	return false
 }

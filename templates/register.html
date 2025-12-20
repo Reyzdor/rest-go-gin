@@ -46,23 +46,26 @@
                         <input type="password" name="confirm_password" class="form-input" placeholder="Confirm your password" required>
                     </div>
 
+                    {{ if .error }}
+                        <p class="error">{{.error}}</p>
+                    {{ end }}
+
                     <button type="submit" class="register-button">Sign Up</button>
                 </form>
                 
                 <div class="login-link">
-                    Already have an account? <a href="./login.html">Sign In</a>
+                    Already have an account? <a href="/login">Sign In</a>
                 </div>
             </div>
         </div>
         
        <div class="register-right">
             <div class="register-slider" id="registerSlider">
-                <!-- Слайды будут созданы через JS -->
             </div>
         </div>
     </div>
 
-    <!-- Подключаем JS файл -->
+
     <script src="./static/register-slider.js"></script>
 
 </body>
