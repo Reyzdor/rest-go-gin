@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"Application/auth"
+	"Application/database"
 	"Application/models"
 	"Application/repository"
 	"net/http"
@@ -85,6 +87,29 @@ func Register(c *gin.Context) {
 		c.HTML(http.StatusConflict, "register.html", gin.H{"error": "User already exists"})
 		return
 	}
+
+	createdUser, err := repository.GetUserByEmail(input.Email)
+	if err != nil {
+		c.Redirect(http.StatusFound, "/login")
+		return
+	}
+
+	accessToken, err := auth.GenerateAccessToken(createdUser.ID, createdUser.Email, createdUser.Username)
+	if err != nil {
+		c.Redirect(http.StatusFound, "/login")
+		return
+	}
+
+	refreshToken, err := auth.GenerateRefreshToken()
+	if err != nil {
+		c.Redirect(http.StatusFound, "/login")
+		return
+	}
+
+	repository.SaveSession(database.DB, createdUser.ID, refreshToken)
+
+	c.SetCookie("auth_token", accessToken, 3600, "/", "", false, true)
+	c.SetCookie("refresh_token", refreshToken, 3600*24*7, "/", "", false, true)
 
 	c.Redirect(http.StatusFound, "/main")
 }

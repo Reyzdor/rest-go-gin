@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"Application/auth"
+	"Application/database"
 	"Application/models"
 	"Application/repository"
 	"net/http"
@@ -42,6 +44,27 @@ func Login(c *gin.Context) {
 		c.HTML(http.StatusOK, "login.html", gin.H{"error": "Wrong password"})
 		return
 	}
+
+	accessToken, err := auth.GenerateAccessToken(user.ID, user.Email, user.Username)
+	if err != nil {
+		c.HTML(http.StatusOK, "login.html", gin.H{"error": "Server error (A)"})
+		return
+	}
+
+	refreshToken, err := auth.GenerateRefreshToken()
+	if err != nil {
+		c.HTML(http.StatusOK, "login.html", gin.H{"error": "Server error (R)"})
+		return
+	}
+
+	err = repository.SaveSession(database.DB, user.ID, refreshToken)
+	if err != nil {
+		c.HTML(http.StatusOK, "login.html", gin.H{"error": "Server error (E)"})
+		return
+	}
+
+	c.SetCookie("auth_token", accessToken, 3600, "/", "", false, true)
+	c.SetCookie("refresh_token", refreshToken, 3600*24*7, "/", "", false, true)
 
 	c.Redirect(http.StatusFound, "/main")
 

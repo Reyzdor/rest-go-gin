@@ -112,16 +112,22 @@ body {
     color: #872BFF; 
     transform: translateY(-2px);
 }
-
 .auth-button {
     display: flex;
     gap: 20px;
     align-items: center;
 }
 
+.exit {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: middle;
+    transition: transform 0.3s ease-in-out;
+}
 
-
-.login, .sign-up {
+.login, .sign-up, .logout-btn {
     width: 120px;
     font-family: "Plus Jakarta Sans", sans-serif;
     height: 50px;
@@ -138,23 +144,32 @@ body {
     align-items: center; 
     text-decoration: none;
     justify-content: center;
+    transition: all 0.3s ease-in-out;
 }
 
-.login, .sign-up a {
+.login, .sign-up, a {
     text-decoration: none;
 }
 
-.sign-up {
+.sign-up, .logout-btn {
     background-color: #872BFF;
     color: white;
-    transition: all 0.3s ease-in-out;
 }
 
 .sign-up:hover {
     transform: scale(1.05);
     background-color: white;
     color: black;
-    box-shadow: 0 8px 20px rgba(135, 43, 255, 0.3)
+    box-shadow: 0 8px 20px rgba(135, 43, 255, 0.3);
+}
+
+.logout-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(135, 43, 255, 0.3);
+}
+
+.logout-btn:hover .exit {
+    transform: scale(1.05);
 }
 
 .login {
@@ -165,10 +180,8 @@ body {
     transform: scale(1.05);
     background-color: #872BFF;
     color: white;
-    box-shadow: 0 8px 20px rgba(135, 43, 255, 0.3)
-    
+    box-shadow: 0 8px 20px rgba(135, 43, 255, 0.3);
 }
-
 .container-main {
     max-width: 1200px;
     margin: 160px auto 0 auto;
@@ -345,6 +358,30 @@ body {
     transform: translateX(-50px);
     animation: slideInLeft 0.4s ease forwards;
 }
+
+.auth-section {
+    display: flex;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.auth-name {
+    color: #333;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
 
 @keyframes fadeInUp {
     to {

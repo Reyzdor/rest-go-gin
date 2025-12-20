@@ -30,10 +30,23 @@
                 <li><a href="/">Special Deals</a></li>
                 <li><a href="/">Support</a></li>
             </ul>
-            
-            <div class="auth-button">
-                <a href="/login" class="login">Login</a>
-                <a href="/register" class="sign-up">Sign Up</a>
+
+             <div class="auth-section">
+                {{ if .Authenticated }}
+                    <div class="user-info">
+                        <a href="" class="auth-btn">{{.Username}}</a>
+                        
+                        <a href="/logout" class="logout-btn">
+                            <img src=".\static\media\slide-1\exit.png" alt="" class="exit">
+                            Logout
+                        </a>
+                    </div>
+                {{ else }}
+                    <div class="auth-buttons">
+                        <a href="/login" class="login">Login</a>
+                        <a href="/register" class="sign-up">Sign Up</a>
+                    </div>
+                {{ end }}
             </div>
         </nav>
     </header>
