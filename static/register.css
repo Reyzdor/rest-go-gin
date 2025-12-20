@@ -55,7 +55,6 @@ body {
     opacity: 0.7;
 }
 
-
 .register-wrapper {
     display: flex;
     min-height: 100vh;
@@ -255,6 +254,98 @@ body {
     border: 1px solid rgba(135, 43, 255, 0.2);
 }
 
+.register-slider {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.register-slider-container {
+    width: 600%;
+    height: 100%;
+    display: flex;
+    animation: registerSlide 30s infinite ease-in-out;
+}
+
+.register-slide {
+    width: 16.6667%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 1.5s ease;
+}
+
+.register-slide-1 {
+    background-image: url('./media/photos/1.jpg');
+}
+
+.register-slide-2 {
+    background-image: url('./media/photos/11.jpg');
+}
+
+.register-slide-3 {
+    background-image: url('./media/photos/4.jpg');
+}
+
+.register-slide-4 {
+    background-image: url('./media/photos/8.jpg');
+}
+
+.register-slide-5 {
+    background-image: url('./media/photos/6.jpg');
+}
+
+.register-slide-6 {
+    background-image: url('./media/photos/9.jpg');
+}
+
+@keyframes registerSlide {
+    0% {
+        transform: translateX(0);
+    }
+    10% {
+        transform: translateX(0);
+    }
+    15% {
+        transform: translateX(-16.6667%);
+    }
+    25% {
+        transform: translateX(-16.6667%);
+    }
+    30% {
+        transform: translateX(-33.3334%);
+    }
+    40% {
+        transform: translateX(-33.3334%);
+    }
+    45% {
+        transform: translateX(-50.0001%);
+    }
+    55% {
+        transform: translateX(-50.0001%);
+    }
+    60% {
+        transform: translateX(-66.6668%);
+    }
+    70% {
+        transform: translateX(-66.6668%);
+    }
+    75% {
+        transform: translateX(-83.3335%);
+    }
+    85% {
+        transform: translateX(-83.3335%);
+    }
+    90% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
 @media (max-width: 768px) {
     .register-left {
         padding: 80px 20px 30px;
@@ -269,12 +360,6 @@ body {
         width: 200px;
         transform: rotate(-90deg) translateY(20px);
         left: 20px;
-    }
-    
-    body::before {
-        width: 220px;
-        transform: rotate(-90deg) translateY(30px);
-        left: 25px;
     }
     
     .register-title {
@@ -300,12 +385,6 @@ body {
         width: 150px;
         transform: rotate(-90deg) translateY(15px);
         left: 15px;
-    }
-    
-    body::before {
-        width: 170px;
-        transform: rotate(-90deg) translateY(25px);
-        left: 20px;
     }
     
     .fly-reg {
@@ -346,22 +425,14 @@ body {
     .register-right {
         display: block;
         flex: 1;
-        background: url('./media/slide-1/most.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
         position: relative;
         min-height: 100vh;
+        overflow: hidden;
     }
     
-    .register-right::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
+    .register-right .register-slider {
         width: 100%;
         height: 100%;
-        background: url('./media/slide-1/12.jpg') center/cover no-repeat;
     }
     
     .register-header {
@@ -400,11 +471,5 @@ body {
         width: 400px;
         transform: rotate(-90deg) translateY(100px);
         left: 100px;
-    }
-    
-    body::before {
-        width: 450px;
-        transform: rotate(-90deg) translateY(120px);
-        left: 120px;
     }
 }

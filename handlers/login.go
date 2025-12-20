@@ -43,6 +43,6 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.Redirect(http.StatusFound, "/index")
+	c.Redirect(http.StatusFound, "/main")
 
 }

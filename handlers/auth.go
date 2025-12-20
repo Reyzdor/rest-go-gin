@@ -54,7 +54,7 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "Registered"})
+	c.Redirect(http.StatusFound, "/main")
 }
 
 func isValidEmail(email string) bool {
