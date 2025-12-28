@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./static/header.css"/>
+</head>
+<body>
+    <header>
+        <nav class="slide-1">
+            <div class="logo-container">
+                <a href="/" class="logo">
+                    <img src="./static/media/slide-1/logo.svg" alt="">
+                </a>
+                <h4 class="text">Travelo</h4>
+            </div>
+            
+            
+            <ul class="menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/tours">Tours</a></li>
+                <li><a href="/">Special Deals</a></li>
+                <li><a href="/">Support</a></li>
+            </ul>
+
+             <div class="auth-section">
+                {{ if .Authenticated }}
+                    <div class="user-info">
+                        <a href="" class="auth-btn">{{.Username}}</a>
+                        
+                        <a href="/logout" class="logout-btn">
+                            <img src=".\static\media\slide-1\exit.png" alt="" class="exit">
+                            Logout
+                        </a>
+                    </div>
+                {{ else }}
+                    <div class="auth-buttons">
+                        <a href="/login" class="login">Login</a>
+                        <a href="/register" class="sign-up">Sign Up</a>
+                    </div>
+                {{ end }}
+            </div>
+        </nav>
+    </header>
+</body>
+</html>

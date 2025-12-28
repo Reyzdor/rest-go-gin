@@ -14,42 +14,8 @@
 <body>
     <div class="e"></div>
 
-    <header>
-        <nav class="slide-1">
-            <div class="logo-container">
-                <a href="/" class="logo">
-                    <img src="./static/media/slide-1/logo.svg" alt="">
-                </a>
-                <h4 class="text">Travelo</h4>
-            </div>
-            
-            
-            <ul class="menu">
-                <li><a href="/">Home</a></li>
-                <li><a href="/">Discover</a></li>
-                <li><a href="/">Special Deals</a></li>
-                <li><a href="/">Support</a></li>
-            </ul>
+    {{ template "header.html" .  }}
 
-             <div class="auth-section">
-                {{ if .Authenticated }}
-                    <div class="user-info">
-                        <a href="" class="auth-btn">{{.Username}}</a>
-                        
-                        <a href="/logout" class="logout-btn">
-                            <img src=".\static\media\slide-1\exit.png" alt="" class="exit">
-                            Logout
-                        </a>
-                    </div>
-                {{ else }}
-                    <div class="auth-buttons">
-                        <a href="/login" class="login">Login</a>
-                        <a href="/register" class="sign-up">Sign Up</a>
-                    </div>
-                {{ end }}
-            </div>
-        </nav>
-    </header>
     <main>
         <div class="container-main">
             <div class="container-main-left">

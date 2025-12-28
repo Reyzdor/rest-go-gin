@@ -9,7 +9,7 @@ func createPostsTable(db *sql.DB) error {
 			title TEXT NOT NULL,
 			content TEXT NOT NULL,
 			user_id INTEGER NOT NULL,
-			created_at DATETIME CURRENT_TIMESTAMP,
+			created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 			FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 		);
 	`
