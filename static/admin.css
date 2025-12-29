@@ -1,34 +1,80 @@
-body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
+body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
         input[type="text"],
         input[type="number"],
         textarea {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-size: 16px;
         }
-        textarea { height: 200px; }
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        .file-upload-area {
+            border: 3px dashed #872BFF;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            background: #f8f5ff;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+        .file-upload-area:hover {
+            background: #f0ebff;
+        }
+        #file-input {
+            display: none;
+        }
+        .file-list {
+            margin-top: 20px;
+        }
+        .file-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .file-preview {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
         button {
             background: #872BFF;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .posts-list { margin-top: 40px; }
-        .post-item {
-            border: 1px solid #eee;
-            padding: 15px;
-            margin-bottom: 10px;
+            padding: 12px 30px;
             border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
         }
-        .post-image { max-width: 200px; margin-top: 10px; }
-        .price { 
-            color: #872BFF; 
-            font-weight: bold; 
-            font-size: 18px;
-            margin: 10px 0;
+        button:hover {
+            background: #7620e0;
+        }
+        .help-text {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
         }

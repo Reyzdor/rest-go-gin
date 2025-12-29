@@ -24,6 +24,10 @@ func InitSQLite() error {
 		return err
 	}
 
+	if err := createPostsTable(db); err != nil {
+		return err
+	}
+
 	DB = db
 	return nil
 }

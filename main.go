@@ -31,10 +31,7 @@ func main() {
 	r.GET("/register", func(c *gin.Context) {
 		c.HTML(200, "register.html", nil)
 	})
-
-	r.GET("/tours", func(c *gin.Context) {
-		c.HTML(200, "tours.html", nil)
-	})
+	r.GET("/tours", handlers.ToursPage)
 
 	r.GET("/login", func(c *gin.Context) {
 		c.HTML(200, "login.html", nil)

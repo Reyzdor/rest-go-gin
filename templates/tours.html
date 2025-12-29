@@ -47,25 +47,44 @@
         </div>
 
     </div>
-    <div class="filter">
-        <h3 class="search">Filter</h3>
-         <div class="filter-group">
-            <label>Search hotel:</label>
-            <input type="text" id="search-input" placeholder="Enter hotel name">
+   
+    <div class="tours-results">
+                <div class="tours-grid" id="tours-container">
+                    {{range .posts}}
+                    <div class="tour-card">
+                        {{if .MainImage}}
+                        <img src="{{.MainImage}}" alt="{{.Title}}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px 12px 0 0; margin-bottom: 15px;">
+                        {{end}}
+                        
+                        <h4>{{.Title}}</h4>
+                        
+                        {{if .Price}}
+                        <div class="price">{{.Price}} ₽</div>
+                        {{end}}
+                        
+                        <p style="color: #666; font-size: 14px; line-height: 1.5; margin: 10px 0;">
+                            {{if gt (len .Content) 150}}
+                                {{slice .Content 0 150}}...
+                            {{else}}
+                                {{.Content}}
+                            {{end}}
+                        </p>
+                        
+                        <a href="/post/{{.ID}}" style="display: inline-block; background: linear-gradient(135deg, #872BFF 0%, #F411CF 100%); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center;">
+                            View Details
+                        </a>
+                    </div>
+                    {{else}}
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+                        <p style="color: #A8A8A8; font-size: 18px;">No tours available yet.</p>
+                        {{if .Authenticated}}
+                        <a href="/admin" style="color: #872BFF; text-decoration: none;">Create first tour in admin panel</a>
+                        {{end}}
+                    </div>
+                    {{end}}
+                </div>
+            </div>
         </div>
-        <div class="filter-group">
-        <label>Price up to:</label>
-        <select id="price-select">
-            <option value="0">Any</option>
-            <option value="1500">Up to $1500</option>
-            <option value="2500">Up to $2500</option>
-            <option value="5000">Up to $3500</option>
-        </select>
-         <button id="search-btn">Find tours</button>
-    </div>
-    <div id="tours-container">
-        <!-- Здесь появятся туры -->
-    </div>
     </div>
     </main>
     <script src="./static/tours.js"></script>

@@ -9,6 +9,15 @@ type Post struct {
 	UserID    int
 	Username  string
 	CreatedAt time.Time
-	Image     string
 	Price     int
+	MainImage string
+	Images    []string
+}
+
+type PostImage struct {
+	ID        int
+	PostID    int
+	ImagePath string
+	IsMain    bool
+	SortOrder int
 }

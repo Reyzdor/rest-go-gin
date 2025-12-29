@@ -27,6 +27,13 @@
             <label>Image:</label>
             <input type="file" name="image" accept="image/*">
         </div>
+
+         <div class="file-upload-area" onclick="document.getElementById('file-input').click()">
+                <h3>📷 Нажмите или перетащите фотографии сюда</h3>
+                <p>Можно выбрать несколько фотографий (до 50)</p>
+                <input type="file" id="file-input" name="images[]" multiple 
+                       accept="image/*" onchange="handleFiles(this.files)">
+            </div>
         
         <button>Create tour</button>
     </form>
@@ -50,5 +57,6 @@
     
     <br>
     <a href="/">Return to main page</a>
+    <script src="./static/admin.js"></script>
 </body>
 </html>
