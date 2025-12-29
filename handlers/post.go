@@ -3,7 +3,11 @@ package handlers
 import (
 	"Application/database"
 	"Application/repository"
+	"fmt"
 	"net/http"
+	"os"
+	"path/filepath"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -36,10 +40,33 @@ func CreatePost(c *gin.Context) {
 
 	title := c.PostForm("title")
 	content := c.PostForm("content")
+	priceStr := c.PostForm("price")
+
+	var price int
+
+	if priceStr != "" {
+		price, _ = strconv.Atoi(priceStr)
+	}
+
+	var imagePath string
+	file, err := c.FormFile("image")
+	if err == nil {
+		os.MkdirAll("./static/uploads", 0755)
+
+		filename := fmt.Sprintf("%d_%s", userID, file.Filename)
+		filepath := filepath.Join("./static/uploads", filename)
+
+		if err := c.SaveUploadedFile(file, filepath); err != nil {
+			c.String(http.StatusInternalServerError, "Error saving image")
+			return
+		}
+
+		imagePath = "/static/uploads/" + filename
+	}
 
 	_, err = database.DB.Exec(
-		"INSERT INTO posts (title, content, user_id) VALUES(?,?,?)",
-		title, content, userID,
+		"INSERT INTO posts (title, content, image, price, user_id) VALUES(?,?,?,?,?)",
+		title, content, imagePath, price, userID,
 	)
 
 	if err != nil {

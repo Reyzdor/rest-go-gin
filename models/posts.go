@@ -9,4 +9,6 @@ type Post struct {
 	UserID    int
 	Username  string
 	CreatedAt time.Time
+	Image     string
+	Price     int
 }
